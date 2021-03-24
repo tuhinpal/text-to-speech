@@ -1,0 +1,16 @@
+{
+    "name": "texttospeech",
+    "version": "1.0.0",
+    "description": "Test to Speech using Google's Library",
+    "main": "main.js",
+    "scripts": {
+        "dev": "nodemon main.js",
+        "start": "node main.js"
+    },
+    "author": "Tuhin Kanti Pal",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "express": "^4.17.1",
+        "gtts": "^0.2.1"
+    }
+}
