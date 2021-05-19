@@ -14,7 +14,7 @@
             height: 100vh;
             flex-direction: column;
         }
-        
+
         textarea {
             font-family: monospace;
             padding: 0.5rem;
@@ -25,7 +25,7 @@
             height: 12vh;
             min-width: 300px;
         }
-        
+
         input {
             margin-bottom: 1.2rem;
             padding: 0.6rem 2rem;
@@ -35,20 +35,20 @@
             font-weight: bold;
             font-size: .8rem;
         }
-        
+
         textarea:focus {
             outline: none;
         }
-        
+
         audio {
             width: 30%;
             min-width: 300px;
         }
-        
+
         audio:focus {
             outline: none;
         }
-        
+
         button {
             cursor: pointer;
             margin-top: 1.2rem;
@@ -68,58 +68,7 @@
     <div id="input">
         <input list="language" type="text" value="English" />
         <datalist id="language">
-        <option value="Afrikaans"></option>
-        <option value="Albanian"></option>
-        <option value="Arabic"></option>
-        <option value="Armenian"></option>
-        <option value="Catalan"></option>
-        <option value="Chinese" ,></option>
-        <option value="Chinese (Mandarin/China)"></option>
-        <option value="Chinese (Mandarin/Taiwan)"></option>
-        <option value="Chinese (Cantonese)"></option>
-        <option value="Croatian"></option>
-        <option value="Czech"></option>
-        <option value="Danish"></option>
-        <option value="Dutch"></option>
-        <option value="English"></option>
-        <option value="English (Australia)"></option>
-        <option value="English (United Kingdom)"></option>
-        <option value="English (United States)"></option>
-        <option value="Esperanto"></option>
-        <option value="Finnish"></option>
-        <option value="French"></option>
-        <option value="German"></option>
-        <option value="Greek"></option>
-        <option value="Haitian Creole"></option>
-        <option value="Hindi"></option>
-        <option value="Hungarian"></option>
-        <option value="Icelandic"></option>
-        <option value="Indonesian"></option>
-        <option value="Italian"></option>
-        <option value="Japanese"></option>
-        <option value="Korean"></option>
-        <option value="Latin"></option>
-        <option value="Latvian"></option>
-        <option value="Macedonian"></option>
-        <option value="Norwegian"></option>
-        <option value="Polish"></option>
-        <option value="Portuguese"></option>
-        <option value="Portuguese (Brazil)"></option>
-        <option value="Romanian"></option>
-        <option value="Russian"></option>
-        <option value="Serbian"></option>
-        <option value="Slovak"></option>
-        <option value="Spanish"></option>
-        <option value="Spanish (Spain)"></option>
-        <option value="Spanish (United States)"></option>
-        <option value="Swahili"></option>
-        <option value="Swedish"></option>
-        <option value="Tamil"></option>
-        <option value="Thai"></option>
-        <option value="Turkish"></option>
-        <option value="Vietnamese"></option>
-        <option value="Welsh"></option>
-      </datalist>
+        </datalist>
 
         <textarea></textarea>
         <button>Listen</button>
@@ -132,12 +81,19 @@
 <script>
     const lang_array = JSON.parse('[{"lang":"Afrikaans","lang_code":"af"},{"lang":"Albanian","lang_code":"sq"},{"lang":"Arabic","lang_code":"ar"},{"lang":"Armenian","lang_code":"hy"},{"lang":"Catalan","lang_code":"ca"},{"lang":"Chinese","lang_code":"zh"},{"lang":"Chinese (Mandarin/China)","lang_code":"zh-cn"},{"lang":"Chinese (Mandarin/Taiwan)","lang_code":"zh-tw"},{"lang":"Chinese (Cantonese)","lang_code":"zh-yue"},{"lang":"Croatian","lang_code":"hr"},{"lang":"Czech","lang_code":"cs"},{"lang":"Danish","lang_code":"da"},{"lang":"Dutch","lang_code":"nl"},{"lang":"English","lang_code":"en"},{"lang":"English (Australia)","lang_code":"en-au"},{"lang":"English (United Kingdom)","lang_code":"en-uk"},{"lang":"English (United States)","lang_code":"en-us"},{"lang":"Esperanto","lang_code":"eo"},{"lang":"Finnish","lang_code":"fi"},{"lang":"French","lang_code":"fr"},{"lang":"German","lang_code":"de"},{"lang":"Greek","lang_code":"el"},{"lang":"Haitian Creole","lang_code":"ht"},{"lang":"Hindi","lang_code":"hi"},{"lang":"Hungarian","lang_code":"hu"},{"lang":"Icelandic","lang_code":"is"},{"lang":"Indonesian","lang_code":"id"},{"lang":"Italian","lang_code":"it"},{"lang":"Japanese","lang_code":"ja"},{"lang":"Korean","lang_code":"ko"},{"lang":"Latin","lang_code":"la"},{"lang":"Latvian","lang_code":"lv"},{"lang":"Macedonian","lang_code":"mk"},{"lang":"Norwegian","lang_code":"no"},{"lang":"Polish","lang_code":"pl"},{"lang":"Portuguese","lang_code":"pt"},{"lang":"Portuguese (Brazil)","lang_code":"pt-br"},{"lang":"Romanian","lang_code":"ro"},{"lang":"Russian","lang_code":"ru"},{"lang":"Serbian","lang_code":"sr"},{"lang":"Slovak","lang_code":"sk"},{"lang":"Spanish","lang_code":"es"},{"lang":"Spanish (Spain)","lang_code":"es-es"},{"lang":"Spanish (United States)","lang_code":"es-us"},{"lang":"Swahili","lang_code":"sw"},{"lang":"Swedish","lang_code":"sv"},{"lang":"Tamil","lang_code":"ta"},{"lang":"Thai","lang_code":"th"},{"lang":"Turkish","lang_code":"tr"},{"lang":"Vietnamese","lang_code":"vi"},{"lang":"Welsh","lang_code":"cy"}]');
 
+    var options = '';
+    lang_array.forEach(lang => {
+        options += `<option value="${lang.lang}"></option>`
+    });
+
+    selector("datalist[id=language]").innerHTML = options;
+
     window.onload = () => {
         selector("div[id=output]").style.display = "none";
 
         selector("div[id=input] > button").addEventListener(
             "click",
-            async function() {
+            async function () {
                 selector("div[id=input]").style.display = "none";
                 selector("div[id=output]").style.display = "flex";
                 var text = selector("div[id=input] > textarea").value;
@@ -145,17 +101,17 @@
                     var text = "Please write something for listen"
                 }
                 fetch("/", {
-                        method: "POST",
-                        mode: "same-origin",
-                        cache: "no-cache",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            text,
-                            language: findCode(selector("input").value)
-                        }),
-                    })
+                    method: "POST",
+                    mode: "same-origin",
+                    cache: "no-cache",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        text,
+                        language: findCode(selector("input").value)
+                    }),
+                })
                     .then((response) => response.blob())
                     .then((result) => {
                         selector("audio").src = URL.createObjectURL(result);
@@ -165,7 +121,7 @@
 
         selector("div[id=output] > button").addEventListener(
             "click",
-            async function() {
+            async function () {
                 selector("div[id=input]").style.display = "flex";
                 selector("div[id=output]").style.display = "none";
             }
